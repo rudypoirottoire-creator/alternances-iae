@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternances IAE · Offres</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="data/offres.js"></script>
+<script src="assets/app.js"></script>
+</head>
+<body data-page="offres">
+<main class="wrap" style="gap:22px">
+  <header class="page">
+    <h1>Les offres</h1>
+    <p class="lede">Cliquez sur une offre pour lire l'annonce complète et lui donner un statut. L'étoile ★ l'ajoute au suivi du groupe.</p>
+  </header>
+
+  <section style="gap:14px">
+    <div class="chips" id="ptabs" role="group" aria-label="Filtrer par parcours"></div>
+    <div class="filters">
+      <label for="fzone">Zone
+        <select id="fzone">
+          <option value="">Toute la France</option>
+          <option value="proche">Puy-de-Dôme + Auvergne-Rhône-Alpes</option>
+          <option value="Puy-de-Dôme">Puy-de-Dôme seulement</option>
+          <option value="Île-de-France">Île-de-France</option>
+          <option value="Autres régions">Autres régions</option>
+        </select></label>
+      <label for="ftri">Trier par
+        <select id="ftri">
+          <option value="pertinence">Pertinence</option>
+          <option value="date">Plus récentes</option>
+          <option value="lieu">Proximité de Clermont</option>
+        </select></label>
+      <input type="search" id="fq" placeholder="Rechercher (ex. SEO, CRM, Lyon)" aria-label="Rechercher une offre">
+    </div>
+    <div class="filters">
+      <label for="fbac5"><input type="checkbox" id="fbac5"> Bac+5 ou master mentionné</label>
+      <label for="ftt"><input type="checkbox" id="ftt"> Télétravail mentionné</label>
+      <label for="fsuivi"><input type="checkbox" id="fsuivi"> Offres suivies seulement</label>
+      <label for="fexcl"><input type="checkbox" id="fexcl"> Afficher aussi les offres exclues</label>
+    </div>
+  </section>
+
+  <section style="gap:12px">
+    <div class="bar">
+      <p class="count" id="count"></p>
+      <div class="chips">
+        <button class="btn" type="button" id="reset">Réinitialiser les filtres</button>
+        <button class="btn" type="button" id="export">Exporter cette liste (CSV)</button>
+      </div>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th style="width:40px"><span class="sr" aria-label="Suivi"></span></th><th>Offre</th><th>Parcours</th><th>Lieu</th><th>Niveau</th><th>Publiée</th><th>Statut</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn" type="button" id="more" style="justify-self:start">Afficher 50 offres de plus</button>
+  </section>
+</main>
+</body>
+</html>

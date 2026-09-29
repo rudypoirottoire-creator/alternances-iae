@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternances IAE · Tableau de bord</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="data/offres.js"></script>
+<script src="assets/app.js"></script>
+</head>
+<body data-page="index">
+<main class="wrap">
+  <header class="page">
+    <span class="eyebrow">Master Marketing Vente · IAE Clermont Auvergne</span>
+    <h1>Quelles alternances pour notre groupe&nbsp;?</h1>
+    <p class="lede">Nous sommes 5 : 3 en MOD, 1 en Retail, 1 en DCIB. Sur les <span class="num" id="h-actives"></span> offres marketing actives sur France Travail, <span class="num" id="h-total"></span> sont en alternance. Après tri, <b class="num" id="h-adaptees"></b> correspondent à notre niveau et à nos parcours.</p>
+  </header>
+
+  <section>
+    <div class="sechead">
+      <span class="eyebrow">Le tri</span>
+      <h2>Sur 10 offres « alternance », environ 5 sont vraiment pour nous</h2>
+      <p>Chaque étape retire des offres qui ne conviennent pas à un étudiant déjà inscrit en master.</p>
+    </div>
+    <div class="panel funnel" id="funnel"></div>
+    <div class="callout"><p><strong>À savoir :</strong> <span class="num" id="c-ecoles"></span> offres (<span id="c-ecoles-pct"></span>) sont publiées par des écoles ou des CFA. Leur but est de recruter des étudiants pour leurs propres formations. Comme nous sommes déjà inscrits à l'IAE, ces offres ne nous concernent pas.</p></div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="eyebrow">Par parcours</span>
+      <h2>Le parcours MOD est très bien servi, Retail et DCIB beaucoup moins</h2>
+      <p>Une offre peut correspondre à plusieurs parcours. Le jeu de données ne couvre que des métiers du marketing et de la communication : la vente B2B, l'export et la gestion de magasin, cœur des parcours DCIB et Retail, n'y figurent pas.</p>
+    </div>
+    <div class="profiles" id="profiles"></div>
+    <div class="panel stack">
+      <h3>Où se trouvent les offres adaptées</h3>
+      <div class="legend">
+        <span><i style="background:var(--z63)"></i>Puy-de-Dôme</span>
+        <span><i style="background:var(--zaura)"></i>Auvergne-Rhône-Alpes (hors 63)</span>
+        <span><i style="background:var(--zidf)"></i>Île-de-France</span>
+        <span><i style="background:var(--zaut)"></i>Autres régions</span>
+      </div>
+      <svg class="chart" id="zones" role="img" aria-label="Répartition géographique des offres adaptées par parcours"></svg>
+      <p class="caption" id="zones-cap"></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="eyebrow">Métiers et priorités</span>
+      <h2>Les postes les plus proposés</h2>
+    </div>
+    <div class="chips" id="mtabs" role="group" aria-label="Choisir un parcours"></div>
+    <div class="grid2">
+      <div class="panel stack">
+        <h3>Offres adaptées par métier</h3>
+        <svg class="chart" id="metiers" role="img" aria-label="Offres adaptées par métier"></svg>
+        <p class="caption" id="metiers-cap"></p>
+      </div>
+      <div class="panel stack">
+        <h3 id="picks-title">À regarder en priorité</h3>
+        <div class="picks" id="picks"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <span class="eyebrow">Qui publie</span>
+      <h2>Un tiers des annonces viennent d'écoles</h2>
+    </div>
+    <div class="panel stack">
+      <svg class="chart" id="employeurs" role="img" aria-label="Offres d'alternance par type d'annonceur"></svg>
+      <p class="caption" id="employeurs-cap"></p>
+    </div>
+  </section>
+</main>
+</body>
+</html>

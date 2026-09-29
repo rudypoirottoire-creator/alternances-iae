@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternances IAE · Méthode</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="data/offres.js"></script>
+<script src="assets/app.js"></script>
+</head>
+<body data-page="methode">
+<main class="wrap">
+  <header class="page">
+    <h1>Méthode et mise à jour</h1>
+    <p class="lede">D'où viennent les chiffres, comment les offres sont triées et comment rafraîchir les données.</p>
+  </header>
+
+  <section class="prose">
+    <h2>Les données</h2>
+    <ul>
+      <li><b>Source :</b> le dépôt public <a href="https://github.com/vincentfavarin/metier" target="_blank" rel="noopener">vincentfavarin/metier</a>. Il récupère chaque jour, via l'API France Travail, les offres de 23 métiers du marketing, de la communication et du digital.</li>
+      <li><b>Données actuelles :</b> la liste du <b data-v="maj"></b>, qui compte <b data-v="actives"></b> offres actives, dont <b data-v="alternances"></b> en alternance et <b data-v="adaptees"></b> adaptées au groupe.</li>
+      <li>Quand une annonce existe en plusieurs versions, seule la plus récente est conservée.</li>
+      <li><b>Alternance :</b> contrat d'apprentissage, contrat de professionnalisation ou offre marquée « alternance ».</li>
+    </ul>
+
+    <h2>Le tri</h2>
+    <p>Une offre est jugée <b>adaptée</b> si elle remplit quatre conditions :</p>
+    <ol>
+      <li>Elle est publiée par une entreprise, pas par une école ou un CFA qui recrute pour sa propre formation (ISCOD, Pigier, Aureis…). Ce tri se fait sur le nom de l'annonceur et sur des formules comme « notre école », « entreprise partenaire » ou « titre RNCP ».</li>
+      <li>Elle ne vise pas un Bac+2/3 (BTS, BUT, bachelor, licence).</li>
+      <li>Ce n'est pas un poste de premier niveau : vendeur, employé, SAV, téléconseiller, mise en rayon.</li>
+      <li>Elle correspond au moins à un parcours :
+        <ul>
+          <li><b>MOD</b> : métiers du marketing, du digital et de la communication (codes ROME M1705, M1718, E1101…) ou mots-clés tels que marketing, digital, SEO, CRM, contenu.</li>
+          <li><b>Retail</b> : merchandising, relation client, e-commerce, promotion des ventes, mots-clés tels que magasin, enseigne, omnicanal, ou employeur du commerce de détail (NAF 47).</li>
+          <li><b>DCIB</b> : mots-clés tels que commercial, export, international, B2B, grands comptes, business developer.</li>
+        </ul></li>
+    </ol>
+    <p><b>Score de pertinence</b>, utilisé pour le tri « Pertinence » : +3 si l'employeur est nommé, +1 s'il est anonyme, +2 si Bac+5 ou master est mentionné, +2 si l'offre est dans le Puy-de-Dôme, +1 si elle est ailleurs en Auvergne-Rhône-Alpes.</p>
+    <div class="callout"><p><strong>Limites :</strong> le classement est automatique et fait quelques erreurs. Le jeu de données ne couvre pas la vente B2B, l'export ni la gestion de magasin : pour les parcours DCIB et Retail, complétez avec La bonne alternance, Welcome to the Jungle, LinkedIn ou une démarche directe auprès des entreprises.</p></div>
+
+    <h2>Mettre à jour les données</h2>
+    <p>Les offres changent tous les jours. Pour les rafraîchir, ouvrez le Terminal dans ce dossier et lancez :</p>
+    <pre>bash scripts/mettre_a_jour.sh</pre>
+    <p>Le script télécharge la dernière liste d'offres actives et les annonces brutes, refait le tri et remplace <code>data/offres.js</code> et <code>data/offres.csv</code>. Il faut une connexion internet. <code>curl</code>, <code>jq</code> et <code>ruby</code> sont déjà installés sur macOS. Rechargez ensuite la page.</p>
+    <p>Le suivi du groupe (statuts, notes) n'est pas touché par la mise à jour. Une offre suivie qui a disparu de France Travail reste dans la sauvegarde, et la page Suivi le signale.</p>
+
+    <h2>Fichiers</h2>
+    <ul>
+      <li><code>index.html</code>, <code>offres.html</code>, <code>suivi.html</code>, <code>methode.html</code> : les pages du site.</li>
+      <li><code>assets/</code> : le style et le code JavaScript, sans aucune dépendance externe.</li>
+      <li><code>data/offres.js</code> : les offres classées, chargées par les pages. <code>data/offres.csv</code> : les mêmes données pour Excel.</li>
+      <li><code>scripts/</code> : la mise à jour (<code>mettre_a_jour.sh</code>) et les règles de tri (<code>classer.rb</code>).</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

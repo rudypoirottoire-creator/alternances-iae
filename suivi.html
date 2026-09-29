@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternances IAE · Suivi du groupe</title>
+<link rel="stylesheet" href="assets/style.css">
+<script src="data/offres.js"></script>
+<script src="assets/app.js"></script>
+</head>
+<body data-page="suivi">
+<main class="wrap" style="gap:36px">
+  <header class="page">
+    <h1>Suivi du groupe</h1>
+    <p class="lede">Les offres que vous avez retenues, leur statut et qui s'en occupe. Ce suivi est enregistré dans ce navigateur. Pour le partager avec le reste du groupe, exportez-le puis importez-le chez les autres.</p>
+  </header>
+
+  <section>
+    <div class="bar">
+      <label class="field" for="fqui">Afficher <select id="fqui"></select></label>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <p class="callout" id="perdus" hidden></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Offre</th><th>Parcours</th><th>Statut</th><th>Qui</th><th>Mis à jour</th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel stack" style="align-content:start">
+      <h2>Le groupe</h2>
+      <p class="muted">Indiquez vos prénoms et parcours. Ils servent à attribuer les offres.</p>
+      <div class="members" id="members"></div>
+    </section>
+
+    <section class="panel stack" style="align-content:start">
+      <h2>Partager le suivi</h2>
+      <p class="muted">Chacun peut exporter son suivi et l'envoyer aux autres (Messenger, e-mail, Drive…). L'import fusionne les deux suivis et garde la version la plus récente de chaque offre.</p>
+      <div class="chips">
+        <button class="btn primary" type="button" id="exp-json">Exporter la sauvegarde (.json)</button>
+        <label class="btn" for="imp-file">Importer une sauvegarde<input type="file" id="imp-file" accept=".json,application/json" hidden></label>
+      </div>
+      <label class="field" for="imp-groupe"><input type="checkbox" id="imp-groupe"> Remplacer aussi les noms du groupe lors de l'import</label>
+      <div class="chips">
+        <button class="btn" type="button" id="exp-csv">Exporter pour Excel (.csv)</button>
+        <button class="btn danger" type="button" id="vider">Vider le suivi</button>
+      </div>
+    </section>
+  </div>
+</main>
+</body>
+</html>
