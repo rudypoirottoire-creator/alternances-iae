@@ -9,7 +9,7 @@ Double-cliquez sur `index.html`. Il n'y a rien à installer et le site marche sa
 - **Tableau de bord** : le tri des offres, les chiffres par parcours, la carte des régions, les métiers et les offres prioritaires.
 - **Offres** : la liste filtrable (parcours, zone, Bac+5, télétravail, recherche) et la fiche complète de chaque annonce. Export CSV possible.
 - **Suivi du groupe** : les offres retenues, leur statut (à postuler, envoyée, entretien…) et qui s'en occupe.
-- **Analyse (TD 1)** : l'analyse univariée demandée au TD 1 (nature des variables, effectifs et fréquences, moyenne/médiane/mode, dispersion, asymétrie, mise en classes, bon graphique, lecture avec un chiffre, désordre des données). Chaque graphique a sa phrase de lecture, recalculée à chaque mise à jour des données.
+- **Analyse (TD 1)**, en bas du tableau de bord : l'analyse univariée demandée au TD 1 (nature des variables, effectifs et fréquences, moyenne/médiane/mode, dispersion, asymétrie, mise en classes, bon graphique, lecture avec un chiffre, désordre des données). Chaque graphique a sa phrase de lecture, recalculée à chaque mise à jour des données.
 - **Méthode** : comment les offres sont triées.
 
 ## Partager le suivi entre vous 5
