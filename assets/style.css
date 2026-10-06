@@ -245,3 +245,13 @@ table.puis td.vise{font-weight:700; color:var(--ink)}
 .canal-p .chip{font-size:13px; padding:5px 11px}
 .prof .go.wttj{font-size:13.5px; color:var(--muted)}
 .prof .go.wttj:hover{color:var(--ink)}
+
+/* Canal Indeed */
+#indeed{scroll-margin-top:80px}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:18px}
+.ind-grid{display:grid; gap:8px; width:100%}
+.ind-q{display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; justify-content:space-between; border-bottom:1px solid var(--soft); padding-bottom:8px}
+.ind-q > span:first-child{font-size:14px; font-weight:600}
+.ind-q .chip{font-size:12.5px; padding:4px 10px}
+#k-indeed{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
+svg text.halo{paint-order:stroke; stroke:var(--surface); stroke-width:4px; stroke-linejoin:round}

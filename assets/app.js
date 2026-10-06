@@ -114,6 +114,13 @@ function rechercheOffres(){
   const lieu = z === "Puy-de-Dôme" ? " Clermont-Ferrand" : z === "Île-de-France" ? " Paris" : z === "proche" ? " Lyon" : "";
   return base + lieu;
 }
+// Lien Indeed de la page Offres : recherche et lieu repris des filtres (Indeed lit ces paramètres dans l'adresse)
+document.addEventListener("pointerdown", e => {
+  const a = e.target.closest("#lien-indeed"); if(!a) return;
+  const z = $("#fzone") ? $("#fzone").value : "", q = rechercheOffres().replace(/ (Clermont-Ferrand|Paris|Lyon)$/, "");
+  const l = z === "Puy-de-Dôme" ? "Clermont-Ferrand (63)" : z === "Île-de-France" ? "Île-de-France" : z === "proche" ? "Auvergne-Rhône-Alpes" : "";
+  a.href = "https://fr.indeed.com/jobs?q=" + encodeURIComponent(q).replace(/%20/g, "+") + (l ? "&l=" + encodeURIComponent(l).replace(/%20/g, "+") : "");
+});
 function blocCanaux(){
   const el = $("#canaux-wttj"); if(!el) return;
   el.innerHTML = Object.entries(P).map(([k,p]) => `<div class="canal-p"><span class="tag ${k}">${p.label}</span>
