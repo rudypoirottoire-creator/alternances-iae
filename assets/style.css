@@ -215,3 +215,23 @@ table.stat.wide{min-width:560px}
 
 .partie{border-top:2px solid var(--line); padding-top:40px; gap:12px}
 .big-h{font-size:clamp(26px,4vw,36px); line-height:1.1}
+
+/* CM 2 : hypothèses */
+#analyse,#cm2{scroll-margin-top:80px}
+section[id^="h-"]{scroll-margin-top:80px}
+table.hyp-roles,table.choix{min-width:760px; font-size:14px}
+table.hyp-roles td .s{margin-top:2px}
+.hcards{display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:14px}
+.hcard{background:var(--surface); border:1px solid var(--line); border-radius:10px; padding:18px; display:grid; gap:10px; align-content:start}
+.hcard dl{margin:0; display:grid; grid-template-columns:auto 1fr; gap:8px 12px}
+.hcard dt{font:700 13px var(--mono); background:var(--soft); border-radius:4px; padding:3px 7px; align-self:start}
+.hcard dd{margin:0; font-size:14.5px}
+.hcard .vu{font-size:13.5px; color:var(--muted); border-top:1px solid var(--soft); padding-top:10px}
+table.pval{min-width:760px}
+table.pval tr.cond td{font-size:13px; color:var(--muted); border-bottom:1px solid var(--line); padding-top:0}
+table.pval tr:not(.cond) td{border-bottom:0}
+table.puis{min-width:700px}
+.dec{display:inline-block; font-size:12.5px; font-weight:600; padding:3px 9px; border-radius:999px; white-space:nowrap}
+.dec.oui{background:var(--okbg); color:var(--ok)}
+.dec.non{background:var(--soft); color:var(--muted)}
+table.puis td.vise{font-weight:700; color:var(--ink)}

@@ -65,7 +65,7 @@ const groupe = () => store.get("groupe", GROUPE_DEFAUT);
 /* ---------- en-tête commun ---------- */
 function entete(){
   const page = document.body.dataset.page;
-  const liens = [["index","index.html","Tableau de bord"],["offres","offres.html","Offres"],["suivi","suivi.html","Suivi du groupe"],["analyse","index.html#analyse","Analyse (TD 1)"],["methode","methode.html","Méthode"]];
+  const liens = [["index","index.html","Tableau de bord"],["offres","offres.html","Offres"],["suivi","suivi.html","Suivi du groupe"],["analyse","index.html#analyse","Analyse (TD 1)"],["cm2","index.html#cm2","Hypothèses (CM 2)"],["methode","methode.html","Méthode"]];
   const h = document.createElement("div"); h.className = "top";
   h.innerHTML = `<div class="top-in">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i style="background:var(--mod)"></i><i style="background:var(--retail)"></i><i style="background:var(--dcib)"></i></span>Alternances IAE</a>

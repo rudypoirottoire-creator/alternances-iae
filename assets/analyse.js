@@ -188,6 +188,8 @@ function courbe(svg, pts){
   svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.innerHTML = h;
 }
 
+window.AIAE = {esc, fmt, eur, pct, dateLong, salaire, moyenne, ecartType, quantile, mediane, largeur, dessine, barres, pasAxe};
+
 /* ======================================================
    Page
    ====================================================== */
@@ -248,7 +250,7 @@ function init(){
   const NOTE_ANN = {"École / CFA":"recrute pour sa propre formation", "Anonyme":"entreprise non nommée", "Entreprise":"employeur nommé"};
   dessine(() => barres($("#c-annonceur"), ann.map(([k,n]) => ({label:k, n, note:NOTE_ANN[k]})), N, {left:150}));
   const ec = (ann.find(a => a[0] === "École / CFA") || [0,0])[1];
-  $("#cap-annonceur").innerHTML = `À lire : <b>${fmt(ec)}</b> des ${fmt(N)} offres d'alternance (${pct(ec,N)}) sont publiées par une école ou un CFA : plus d'une sur trois ne vient pas d'un employeur. ${source}`;
+  $("#cap-annonceur").innerHTML = `À lire : <b>${fmt(ec)}</b> des ${fmt(N)} offres d'alternance (${pct(ec,N)}) sont publiées par une école ou un CFA : ${ec/N > .4 ? "plus de deux sur cinq" : "plus d'une sur trois"} ne viennent pas d'un employeur. ${source}`;
   const ctr = compte(o => o.contrat);
   $("#t-contrat").innerHTML = ctr.map(([k,n]) => `<tr><td>${esc(k)}</td><td class="num">${fmt(n)}</td><td class="num">${pct(n,N)}</td></tr>`).join("") + `<tr class="tot"><td>Total</td><td class="num">${fmt(N)}</td><td class="num">100 %</td></tr>`;
   $("#cap-contrat").innerHTML = `À lire : ${pct(ctr[0][1],N)} des offres sont des contrats d'${ctr[0][0].includes("apprentissage") ? "apprentissage" : ctr[0][0].toLowerCase()}. Mode : « ${esc(ctr[0][0])} ».`;
@@ -334,7 +336,7 @@ function init(){
     ["Ce qui manque", pct(nv("salaire"), N), `des offres sans salaire. Aussi vides : la taille de l'établissement (${pct(nv("effectif"),N)}), le temps de travail (${pct(nv("temps"),N)}), le secteur (${pct(nv("secteur"),N)}).`],
     ["Pas au bon format", "3", `unités pour le salaire, écrit en texte : ${etat("mensuel")} « Mensuel », ${etat("annuel") + annuelSusp} « Annuel », ${etat("horaire")} « Horaire ». La durée est aussi du texte (« CDD - 12 Mois »).`],
     ["En double", fmt(doublons), `annonces identiques (même titre, même entreprise, même lieu) : des republications. ${fmt(multi.length)} offres partagent un titre et un annonceur, dont ${pct(multiEc, multi.length)} d'écoles ou d'anonymes qui publient la même annonce dans plusieurs villes.`],
-    ["Pas ce qu'on croit", fmt(annuelSusp), `salaires « annuels » de moins de 3 000 € : ce sont des montants mensuels mal étiquetés. Et un « employeur » sur trois est une école (${pct(ec,N)}).`],
+    ["Pas ce qu'on croit", fmt(annuelSusp), `salaires « annuels » de moins de 3 000 € : ce sont des montants mensuels mal étiquetés. Et ${pct(ec,N)} des « employeurs » sont en fait des écoles.`],
     ["Pas là du tout", "0", `offre de HelloWork, Welcome to the Jungle, Indeed ou LinkedIn : la base ne contient que France Travail, et seulement 23 métiers du marketing. La vente B2B, l'export et la gestion de magasin n'y sont pas.`]
   ].map(([t,n,s]) => `<div class="dcard"><span class="eyebrow">${t}</span><b class="num">${n}</b><p>${s}</p></div>`).join("");
 
