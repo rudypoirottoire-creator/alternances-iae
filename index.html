@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alternances IAE · Tableau de bord</title>
-<link rel="stylesheet" href="assets/style.css?v=20260929">
-<script src="data/offres.js?v=20260929"></script>
-<script src="assets/app.js?v=20260929"></script>
-<script src="assets/analyse.js?v=20260929"></script>
+<link rel="stylesheet" href="assets/style.css?v=20261006">
+<script src="data/offres.js?v=20261006"></script>
+<script src="assets/app.js?v=20261006"></script>
+<script src="assets/analyse.js?v=20261006"></script>
+<script src="assets/cm2.js?v=20261006"></script>
 </head>
 <body data-page="index">
 <main class="wrap">
@@ -15,13 +16,13 @@
     <span class="eyebrow">Master Marketing Vente · IAE Clermont Auvergne</span>
     <h1>Quelles alternances pour notre groupe&nbsp;?</h1>
     <p class="lede">Nous sommes 5 : 3 en MOD, 1 en Retail, 1 en DCIB. Sur les <span class="num" id="h-actives"></span> offres marketing actives sur France Travail, <span class="num" id="h-total"></span> sont en alternance. Après tri, <b class="num" id="h-adaptees"></b> correspondent à notre niveau et à nos parcours.</p>
-    <p><a class="btn primary" href="#analyse">Voir l'analyse du TD 1 ↓</a></p>
+    <p class="chips"><a class="btn primary" href="#analyse">Analyse du TD 1 ↓</a><a class="btn primary" href="#cm2">Hypothèses du CM 2 ↓</a></p>
   </header>
 
   <section>
     <div class="sechead">
       <span class="eyebrow">Le tri</span>
-      <h2>Sur 10 offres « alternance », environ 5 sont vraiment pour nous</h2>
+      <h2>Moins d'une offre « alternance » sur deux est vraiment pour nous</h2>
       <p>Chaque étape retire des offres qui ne conviennent pas à un étudiant déjà inscrit en master.</p>
     </div>
     <div class="panel funnel" id="funnel"></div>
@@ -70,7 +71,7 @@
   <section>
     <div class="sechead">
       <span class="eyebrow">Qui publie</span>
-      <h2>Un tiers des annonces viennent d'écoles</h2>
+      <h2>Plus d'un tiers des annonces viennent d'écoles</h2>
     </div>
     <div class="panel stack">
       <svg class="chart" id="employeurs" role="img" aria-label="Offres d'alternance par type d'annonceur"></svg>
@@ -248,6 +249,116 @@
       <h3>La trace de l'analyse de salaire, étape par étape</h3>
       <div class="funnel" id="trace"></div>
       <p class="caption" id="cap-trace"></p>
+    </div>
+  </section>
+
+  <!-- ===================== CM 2 ===================== -->
+  <section id="cm2" class="partie">
+    <span class="eyebrow">CM 2 · Poser une hypothèse</span>
+    <h2 class="big-h">Tester des hypothèses sur nos offres d'alternance</h2>
+    <p class="lede">Quatre questions qui comptent pour notre recherche d'alternance, une par type de test du cours. Pour chacune : les rôles des variables, H0 et H1, la p-value, la taille de l'effet et le nombre d'offres nécessaire.</p>
+    <nav class="toc" aria-label="Sommaire du CM 2">
+      <a href="#h-pres">1 · La loi sous H0</a><a href="#h-roles">2 · Variable expliquée, explicative</a><a href="#h-hyp">3 · H0 et H1</a>
+      <a href="#h-pval">4 · p-value et seuil de 5 %</a><a href="#h-effet">5 · Taille de l'effet</a><a href="#h-puis">6 · Puissance</a><a href="#h-test">7 · Quel test ?</a>
+    </nav>
+  </section>
+
+  <section id="h-pres">
+    <div class="sechead">
+      <span class="eyebrow">1 · Présentation</span>
+      <h2>Si H0 était vraie, notre résultat serait-il rare ?</h2>
+      <p>Chaque test transforme les données en une statistique. Si H0 est vraie, cette statistique suit une loi connue : on regarde où tombe la nôtre.</p>
+    </div>
+    <div class="chips" id="h-tabs" role="group" aria-label="Choisir une hypothèse"></div>
+    <div class="panel stack">
+      <h3 id="h0-titre" style="font-size:15px"></h3>
+      <div class="legend"><span><i style="background:var(--zidf)"></i>Zone de rejet à 5 %</span><span><i style="background:var(--mod)"></i>p-value : au moins aussi extrême que notre résultat</span></div>
+      <svg class="chart" id="c-h0" role="img" aria-label="Loi de la statistique de test sous H0"></svg>
+      <p class="caption" id="cap-h0"></p>
+    </div>
+  </section>
+
+  <section id="h-roles">
+    <div class="sechead">
+      <span class="eyebrow">2 · Variable expliquée, variable explicative</span>
+      <h2>C'est la question qui fixe les rôles</h2>
+      <p>La variable expliquée (dépendante) est celle qu'on cherche à comprendre ; la variable explicative (indépendante) est celle qui l'influencerait. Leur nature décide du test.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="hyp-roles">
+        <thead><tr><th></th><th>Question</th><th>Variable expliquée</th><th>Variable explicative</th><th>Test</th></tr></thead>
+        <tbody id="t-roles"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="h-hyp">
+    <div class="sechead">
+      <span class="eyebrow">3 · H0 et H1</span>
+      <h2>On ne prouve jamais H1 : on cherche à rejeter H0</h2>
+      <p>H0 dit « aucune différence, aucun lien ». H1 dit qu'il y en a un. Le test mesure si les données sont assez éloignées de H0 pour la rejeter.</p>
+    </div>
+    <div class="hcards" id="hyp-cards"></div>
+  </section>
+
+  <section id="h-pval">
+    <div class="sechead">
+      <span class="eyebrow">4 · La p-value et le seuil de 5 %</span>
+      <h2>Sous 0,05, on rejette H0 ; au-dessus, on ne la rejette pas</h2>
+      <p>La p-value est la probabilité d'observer un écart au moins aussi grand que le nôtre si H0 était vraie. Ce n'est ni la probabilité que H1 soit vraie, ni une mesure de l'importance du résultat.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="stat pval">
+        <thead><tr><th>Hypothèse</th><th>Test</th><th>Statistique</th><th>Degrés de liberté</th><th>p-value</th><th>Décision à 5 %</th></tr></thead>
+        <tbody id="t-pval"></tbody>
+      </table>
+    </div>
+    <p class="caption" id="cap-pval"></p>
+  </section>
+
+  <section id="h-effet">
+    <div class="sechead">
+      <span class="eyebrow">5 · La taille de l'effet</span>
+      <h2>Significatif ne veut pas dire important</h2>
+      <p>La taille de l'effet mesure l'écart lui-même, dans une unité qui ne dépend pas du nombre d'offres : V de Cramér pour le chi², d de Cohen pour le test t, êta² pour l'ANOVA, r pour la corrélation.</p>
+    </div>
+    <div class="panel stack">
+      <svg class="chart" id="c-effet" role="img" aria-label="Taille de l'effet de chaque hypothèse"></svg>
+      <p class="caption" id="cap-effet"></p>
+    </div>
+  </section>
+
+  <section id="h-puis">
+    <div class="sechead">
+      <span class="eyebrow">6 · Combien d'observations ? La puissance du test</span>
+      <h2>Un test peut passer à côté d'un effet réel, faute d'offres</h2>
+      <p>La puissance est la probabilité de détecter un effet quand il existe ; on vise 80 %. Plus l'effet cherché est petit, plus il faut d'observations.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="stat puis">
+        <thead><tr><th>Test</th><th>Effet petit</th><th>Effet moyen</th><th>Effet fort</th><th>Nos données</th><th>Verdict pour l'effet observé</th></tr></thead>
+        <tbody id="t-puis"></tbody>
+      </table>
+    </div>
+    <p class="caption" id="cap-puis"></p>
+  </section>
+
+  <section id="h-test">
+    <div class="sechead">
+      <span class="eyebrow">7 · Quel test pour quelles variables ?</span>
+      <h2>La nature des deux variables choisit le test</h2>
+      <p>Chaque test a sa mesure de l'effet et ses conditions d'application, à vérifier avant de lire le résultat.</p>
+    </div>
+    <div class="tablewrap">
+      <table class="choix">
+        <thead><tr><th>Variable expliquée</th><th>Variable explicative</th><th>Test</th><th>Taille de l'effet</th><th>Conditions</th><th>Chez nous</th></tr></thead>
+        <tbody>
+          <tr><td>Qualitative</td><td>Qualitative</td><td><b>Chi²</b> d'indépendance</td><td>V de Cramér</td><td>Au moins 5 offres attendues par case</td><td><a href="#h-hyp">H1</a></td></tr>
+          <tr><td>Quantitative</td><td>Qualitative, 2 groupes</td><td><b>Test t</b> (Welch)</td><td>d de Cohen</td><td>Distributions proches de la normale, ou au moins 30 par groupe ; sinon Mann-Whitney</td><td><a href="#h-hyp">H2</a></td></tr>
+          <tr><td>Quantitative</td><td>Qualitative, 3 groupes ou plus</td><td><b>ANOVA</b></td><td>êta²</td><td>Normalité et variances proches ; sinon Kruskal-Wallis</td><td><a href="#h-hyp">H3</a></td></tr>
+          <tr><td>Quantitative</td><td>Quantitative</td><td><b>Corrélation</b>, puis régression</td><td>r (et R²)</td><td>Lien linéaire, peu de valeurs extrêmes ; sinon Spearman</td><td><a href="#h-hyp">H4</a></td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </main>
