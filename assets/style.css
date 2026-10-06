@@ -235,3 +235,13 @@ table.puis{min-width:700px}
 .dec.oui{background:var(--okbg); color:var(--ok)}
 .dec.non{background:var(--soft); color:var(--muted)}
 table.puis td.vise{font-weight:700; color:var(--ink)}
+
+/* Canaux */
+#canaux{scroll-margin-top:80px}
+.canal-h{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap}
+.canal p{font-size:14.5px}
+.canal-ps{display:grid; gap:12px}
+.canal-p{display:grid; gap:6px; justify-items:start}
+.canal-p .chip{font-size:13px; padding:5px 11px}
+.prof .go.wttj{font-size:13.5px; color:var(--muted)}
+.prof .go.wttj:hover{color:var(--ink)}

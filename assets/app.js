@@ -65,7 +65,7 @@ const groupe = () => store.get("groupe", GROUPE_DEFAUT);
 /* ---------- en-tête commun ---------- */
 function entete(){
   const page = document.body.dataset.page;
-  const liens = [["index","index.html","Tableau de bord"],["offres","offres.html","Offres"],["suivi","suivi.html","Suivi du groupe"],["analyse","index.html#analyse","Analyse (TD 1)"],["cm2","index.html#cm2","Hypothèses (CM 2)"],["methode","methode.html","Méthode"]];
+  const liens = [["index","index.html","Tableau de bord"],["offres","offres.html","Offres"],["suivi","suivi.html","Suivi du groupe"],["canaux","index.html#canaux","Canaux"],["analyse","index.html#analyse","Analyse (TD 1)"],["cm2","index.html#cm2","Hypothèses (CM 2)"],["methode","methode.html","Méthode"]];
   const h = document.createElement("div"); h.className = "top";
   h.innerHTML = `<div class="top-in">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"><i style="background:var(--mod)"></i><i style="background:var(--retail)"></i><i style="background:var(--dcib)"></i></span>Alternances IAE</a>
@@ -81,6 +81,45 @@ function majBadge(){
   const b = $("#badge"); if(!b) return;
   const n = Object.keys(suivi.all()).filter(id => PAR_ID[id]).length;
   b.textContent = n; b.hidden = !n;
+}
+
+
+/* ---------- canal Welcome to the Jungle (consulté en lien, aucune donnée collectée) ----------
+   Le site de WTTJ ne lit pas la recherche dans l'adresse et demande un compte pour lister les offres :
+   un clic copie la recherche prête à coller, puis ouvre WTTJ dans un nouvel onglet. */
+const WTTJ_URL = "https://www.welcometothejungle.com/fr/jobs";
+const WTTJ = {
+  mod:    ["alternance marketing digital", "alternance chef de projet marketing digital", "alternance traffic manager", "alternance CRM", "alternance chargé d'acquisition", "alternance community manager"],
+  retail: ["alternance retail", "alternance category manager", "alternance trade marketing", "alternance e-commerce", "alternance relation client"],
+  dcib:   ["alternance business developer", "alternance commercial B2B", "alternance key account manager", "alternance export", "alternance international"]
+};
+async function copier(txt){
+  try { await navigator.clipboard.writeText(txt); return true; } catch(e){
+    try { const t = document.createElement("textarea"); t.value = txt; t.style.position = "fixed"; t.style.opacity = "0"; document.body.appendChild(t); t.select(); const ok = document.execCommand("copy"); t.remove(); return ok; } catch(e2){ return false; }
+  }
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-wttj]"); if(!b) return;
+  e.preventDefault();
+  const txt = b.dataset.wttj === "__offres" ? rechercheOffres() : b.dataset.wttj;
+  window.open(WTTJ_URL, "_blank", "noopener");
+  copier(txt).then(ok => toast(ok ? `Recherche copiée : « ${txt} ». Collez-la dans Welcome to the Jungle.` : `Recherche à taper dans Welcome to the Jungle : « ${txt} »`));
+});
+// Sur la page Offres : la recherche suit le filtre de parcours et le mot-clé saisis
+function rechercheOffres(){
+  const q = ($("#fq") && $("#fq").value.trim()) || "";
+  const k = (new URLSearchParams(location.search)).get("parcours") || ($$("#ptabs .chip[aria-pressed='true']")[0] || {dataset:{}}).dataset.k || "";
+  const base = q ? "alternance " + q : (WTTJ[k] ? WTTJ[k][0] : "alternance marketing");
+  const z = $("#fzone") ? $("#fzone").value : "";
+  const lieu = z === "Puy-de-Dôme" ? " Clermont-Ferrand" : z === "Île-de-France" ? " Paris" : z === "proche" ? " Lyon" : "";
+  return base + lieu;
+}
+function blocCanaux(){
+  const el = $("#canaux-wttj"); if(!el) return;
+  el.innerHTML = Object.entries(P).map(([k,p]) => `<div class="canal-p"><span class="tag ${k}">${p.label}</span>
+    <div class="chips">${WTTJ[k].map(q => `<button class="chip" type="button" data-wttj="${esc(q)}" title="Copier cette recherche et ouvrir Welcome to the Jungle">${esc(q.replace(/^alternance /, ""))}</button>`).join("")}</div></div>`).join("");
+  const n = $("#canaux-ft"); if(n) n.textContent = fmt(OFFRES.length);
+  const d = $("#canaux-date"); if(d) d.textContent = dateFR(D.maj);
 }
 
 /* ---------- graphiques SVG ---------- */
@@ -218,7 +257,8 @@ function pageAccueil(){
         <li><b>${s.filter(o => o.teletravail).length}</b> évoquent le télétravail</li>
       </ul>
       <p class="muted" style="font-size:13.5px">${qui.map(esc).join(", ")}</p>
-      <a class="go" href="offres.html?parcours=${k}">Voir les ${fmt(s.length)} offres →</a></div>`;
+      <a class="go" href="offres.html?parcours=${k}">Voir les ${fmt(s.length)} offres →</a>
+      <a class="go wttj" href="${WTTJ_URL}" data-wttj="${esc(WTTJ[k][0])}">Chercher aussi sur Welcome to the Jungle ↗</a></div>`;
   }).join("");
 
   // Zones
@@ -405,6 +445,7 @@ function pageSuivi(){
 /* ---------- démarrage ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   entete();
+  blocCanaux();
   if(!OFFRES.length){
     $(".wrap").insertAdjacentHTML("afterbegin", `<div class="callout"><strong>Données absentes.</strong> Le fichier data/offres.js est introuvable ou vide. Lancez <code>bash scripts/mettre_a_jour.sh</code> depuis le dossier du site.</div>`);
     return;
