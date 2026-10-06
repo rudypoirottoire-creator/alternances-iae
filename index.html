@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alternances IAE · Tableau de bord</title>
-<link rel="stylesheet" href="assets/style.css?v=20261006">
-<script src="data/offres.js?v=20261006"></script>
-<script src="assets/app.js?v=20261006"></script>
-<script src="assets/analyse.js?v=20261006"></script>
-<script src="assets/cm2.js?v=20261006"></script>
+<link rel="stylesheet" href="assets/style.css?v=20261006b">
+<script src="data/offres.js?v=20261006b"></script>
+<script src="assets/app.js?v=20261006b"></script>
+<script src="assets/analyse.js?v=20261006b"></script>
+<script src="assets/cm2.js?v=20261006b"></script>
 </head>
 <body data-page="index">
 <main class="wrap">
@@ -78,6 +78,26 @@
       <p class="caption" id="employeurs-cap"></p>
     </div>
   </section>
+  <section id="canaux">
+    <div class="sechead">
+      <span class="eyebrow">Nos canaux</span>
+      <h2>Deux canaux : l'un analysé, l'autre consulté en lien</h2>
+      <p>Un canal, c'est une source d'offres. Nous n'analysons que des données collectées de façon autorisée ; les autres sites se consultent en direct.</p>
+    </div>
+    <div class="grid2">
+      <div class="panel stack canal">
+        <div class="canal-h"><h3>France Travail</h3><span class="dec oui">Analysé</span></div>
+        <p><b class="num" id="canaux-ft"></b> offres d'alternance au <b id="canaux-date"></b>, issues du dépôt public <a href="https://github.com/vincentfavarin/metier" target="_blank" rel="noopener">vincentfavarin/metier</a>, qui interroge chaque jour l'API officielle de France Travail. Ce sont elles qui alimentent le tableau de bord, l'analyse du TD 1 et les tests du CM 2.</p>
+      </div>
+      <div class="panel stack canal">
+        <div class="canal-h"><h3>Welcome to the Jungle</h3><span class="dec non">Consulté en lien</span></div>
+        <p>Cliquez sur une recherche : elle est copiée et Welcome to the Jungle s'ouvre dans un nouvel onglet, il suffit de la coller. Le site ne lit pas la recherche dans le lien et demande un compte gratuit pour afficher la liste des offres.</p>
+        <div class="canal-ps" id="canaux-wttj"></div>
+      </div>
+    </div>
+    <div class="callout"><p><strong>D'où vient ce canal :</strong> l'idée d'ajouter Welcome to the Jungle vient du dépôt public d'un autre groupe, <a href="https://github.com/loicsabatini/metier" target="_blank" rel="noopener">loicsabatini/metier</a> (script <code>extraire_wttj.py</code>). Nous reprenons le canal mais pas ses fichiers : le script lit le flux d'articles du site, pas ses offres, et complète par des offres générées au hasard quand ce flux ne répond pas. Les conditions d'utilisation de Welcome to the Jungle interdisent aussi la collecte automatique de ses offres, comme le rappelle le dépôt du cours. Ce canal reste donc hors de nos statistiques.</p></div>
+  </section>
+
   <section id="analyse" class="partie">
     <span class="eyebrow">TD 1 · Décrire et montrer</span>
     <h2 class="big-h">Analyse univariée : les offres d'alternance, une variable à la fois</h2>
