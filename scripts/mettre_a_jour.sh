@@ -26,5 +26,10 @@ done
 
 echo "→ Classement des offres…"
 ruby scripts/classer.rb "$CACHE/actives.csv" "$CACHE/brut" "${DERNIER%.csv}"
+echo "→ Canal Indeed (données ouvertes Indeed Hiring Lab)…"
+IH=https://raw.githubusercontent.com/hiring-lab/job_postings_tracker/master/FR
+mkdir -p "$CACHE/indeed"
+for F in aggregate_job_postings_FR.csv job_postings_by_sector_FR.csv regional_fr.csv; do curl -fsSL -o "$CACHE/indeed/$F" "$IH/$F"; done
+ruby scripts/indeed.rb "$CACHE/indeed/aggregate_job_postings_FR.csv" "$CACHE/indeed/job_postings_by_sector_FR.csv" "$CACHE/indeed/regional_fr.csv"
 rm -rf "$CACHE"
 echo "✓ Terminé. Rechargez index.html dans le navigateur."
