@@ -93,8 +93,8 @@
       <div class="opts">
         <label class="opt"><input type="radio" name="f_foyer" value="1"> 1 (je vis seul·e)</label>
         <label class="opt"><input type="radio" name="f_foyer" value="2"> 2</label>
-        <label class="opt"><input type="radio" name="f_foyer" value="3-6"> 3 à 6</label>
-        <label class="opt"><input type="radio" name="f_foyer" value="7+"> 7 ou plus</label>
+        <label class="opt"><input type="radio" name="f_foyer" value="3_a_6"> 3 à 6</label>
+        <label class="opt"><input type="radio" name="f_foyer" value="7_plus"> 7 ou plus</label>
       </div>
     </div>
     <div class="err" id="err-filtre">Merci de répondre aux deux questions.</div>
@@ -185,11 +185,11 @@
     <div class="q">
       <span class="label">Votre âge</span>
       <div class="opts">
-        <label class="opt"><input type="radio" name="age" value="18-24"> 18 à 24 ans</label>
-        <label class="opt"><input type="radio" name="age" value="25-34"> 25 à 34 ans</label>
-        <label class="opt"><input type="radio" name="age" value="35-49"> 35 à 49 ans</label>
-        <label class="opt"><input type="radio" name="age" value="50-64"> 50 à 64 ans</label>
-        <label class="opt"><input type="radio" name="age" value="65+"> 65 ans ou plus</label>
+        <label class="opt"><input type="radio" name="age" value="18_24"> 18 à 24 ans</label>
+        <label class="opt"><input type="radio" name="age" value="25_34"> 25 à 34 ans</label>
+        <label class="opt"><input type="radio" name="age" value="35_49"> 35 à 49 ans</label>
+        <label class="opt"><input type="radio" name="age" value="50_64"> 50 à 64 ans</label>
+        <label class="opt"><input type="radio" name="age" value="65_plus"> 65 ans ou plus</label>
       </div>
     </div>
     <div class="q">
@@ -249,7 +249,7 @@ const CONFIG = {
   // Gabor-Granger : prix soumis, du plancher provisoire au plafond concurrentiel (Spotify Famille 21,24 €)
   GG_PRICES: [15.99, 17.49, 18.99, 19.99, 20.49, 20.99, 21.24],
   GG_ORDER: "croissant",   // ordre fixe, identique pour tous les répondants
-  QUESTIONNAIRE_VERSION: "v1-2026-10-12"
+  QUESTIONNAIRE_VERSION: "v1.1-2026-10-12"
 };
 /* ========================================================== */
 
@@ -339,7 +339,7 @@ document.addEventListener("click", e => {
   if (!b.hasAttribute("data-next")) return;
   if (!validate[cur]()) return;
   if (cur === "filtre") {
-    const cible = radio("f_streaming") === "oui" && (radio("f_foyer") === "3-6" || radio("f_foyer") === "7+");
+    const cible = radio("f_streaming") === "oui" && (radio("f_foyer") === "3_a_6" || radio("f_foyer") === "7_plus");
     if (!cible) { send("hors_cible"); show("hors_cible"); return; }
   }
   if (cur === "profil") { b.disabled = true; send("complet").then(() => show("merci")); return; }
