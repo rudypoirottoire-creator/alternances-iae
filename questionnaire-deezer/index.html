@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Étude – abonnements musicaux familiaux</title>
+<style>
+  :root{
+    --bg:#f6f5f2; --card:#ffffff; --ink:#1d1d1f; --muted:#5f6368; --line:#dedbd4;
+    --accent:#3b3a8f; --accent-ink:#ffffff; --soft:#eeedf7; --warn:#8a4b00; --warn-bg:#fff4e0;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#141416; --card:#1f1f23; --ink:#ececf0; --muted:#a3a3ad; --line:#34343b;
+      --accent:#9d9cf0; --accent-ink:#141416; --soft:#2a2a40; --warn:#ffcf8a; --warn-bg:#3a2a12; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  main{max-width:640px;margin:0 auto;padding:16px 16px 48px}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:8px 0 12px;color:var(--muted);font-size:14px}
+  .bar{height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:16px}
+  .bar>i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  h1{font-size:22px;line-height:1.25;margin:0 0 12px}
+  h2{font-size:18px;margin:0 0 8px}
+  p{margin:0 0 12px}
+  .muted{color:var(--muted);font-size:14px}
+  .q{margin:20px 0 0;padding-top:16px;border-top:1px solid var(--line)}
+  .q:first-of-type{border-top:0;padding-top:0}
+  .q>.label{font-weight:600;display:block;margin-bottom:8px}
+  .opts{display:grid;gap:8px}
+  .opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+  .opt:has(input:checked){border-color:var(--accent);background:var(--soft)}
+  .opt input{accent-color:var(--accent);width:18px;height:18px;margin:0}
+  .money{display:flex;align-items:center;gap:8px}
+  .money input{width:130px;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+  .offer{border:2px solid var(--accent);border-radius:14px;padding:18px;margin:12px 0}
+  .offer h2{font-size:20px}
+  .offer ul{margin:8px 0 0;padding-left:20px}
+  .offer li{margin:4px 0}
+  .ref{margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--soft);font-weight:600}
+  table.gg{width:100%;border-collapse:collapse;margin-top:8px}
+  table.gg th,table.gg td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:center}
+  table.gg th:first-child,table.gg td:first-child{text-align:left;font-weight:600}
+  table.gg input{width:20px;height:20px;accent-color:var(--accent)}
+  .likert{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .likert label{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12px;color:var(--muted);padding:8px 2px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+  .likert label:has(input:checked){border-color:var(--accent);background:var(--soft);color:var(--ink)}
+  .likert input{accent-color:var(--accent);width:18px;height:18px;margin:0}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
+  button{font:inherit;font-weight:600;border-radius:10px;padding:12px 18px;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+  button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);margin-left:auto}
+  button:disabled{opacity:.5;cursor:default}
+  .err{display:none;margin-top:14px;padding:10px 12px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:14px}
+  .err.on{display:block}
+  .demo{margin-bottom:12px;padding:8px 12px;border-radius:10px;background:var(--warn-bg);color:var(--warn);font-size:13px}
+  section[hidden]{display:none}
+  @media (max-width:420px){ .likert label{font-size:11px} table.gg th,table.gg td{padding:8px 4px} }
+</style>
+</head>
+<body>
+<main>
+  <div id="demo" class="demo" hidden></div>
+  <header><span>Étude – IAE Clermont Auvergne</span><span id="stepLabel"></span></header>
+  <div class="bar"><i id="progress"></i></div>
+
+  <!-- 1. ACCUEIL ET CONSENTEMENT -->
+  <section class="card" data-step="accueil">
+    <h1>Les abonnements musicaux en famille</h1>
+    <p>Nous sommes un groupe d'étudiants en Master 1 à l'IAE Clermont Auvergne (Université Clermont Auvergne). Dans le cadre d'un cours sur la fixation des prix, nous étudions le prix des abonnements musicaux partagés en famille.</p>
+    <p>Le questionnaire prend environ <strong>3 minutes</strong>. Il n'y a pas de bonne ou de mauvaise réponse : seul votre avis compte.</p>
+    <p class="muted"><strong>Vos données :</strong> le questionnaire est anonyme. Nous ne demandons ni nom, ni adresse e-mail, et nous n'enregistrons pas votre adresse IP. Les réponses servent uniquement à ce travail universitaire, ne sont pas transmises à une entreprise et seront supprimées à la fin de l'année universitaire. Vous pouvez arrêter à tout moment : rien n'est enregistré tant que vous n'avez pas terminé.</p>
+    <div class="q">
+      <label class="opt"><input type="checkbox" id="consent"> J'ai 18 ans ou plus et j'accepte de répondre à ce questionnaire.</label>
+    </div>
+    <div class="err" id="err-accueil">Merci de cocher la case pour commencer.</div>
+    <div class="nav"><button class="primary" data-next>Commencer</button></div>
+  </section>
+
+  <!-- 2. FILTRE -->
+  <section class="card" data-step="filtre" hidden>
+    <h2>Pour commencer</h2>
+    <div class="q">
+      <span class="label">Écoutez-vous de la musique sur un service de streaming (Deezer, Spotify, Apple Music, YouTube Music, Amazon Music…), y compris en version gratuite ?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="f_streaming" value="oui"> Oui</label>
+        <label class="opt"><input type="radio" name="f_streaming" value="non"> Non</label>
+      </div>
+    </div>
+    <div class="q">
+      <span class="label">Combien de personnes, vous compris, vivent dans votre foyer ?</span>
+      <p class="muted">Votre foyer : les personnes avec qui vous partagez votre logement principal (conjoint, enfants, parents…).</p>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="f_foyer" value="1"> 1 (je vis seul·e)</label>
+        <label class="opt"><input type="radio" name="f_foyer" value="2"> 2</label>
+        <label class="opt"><input type="radio" name="f_foyer" value="3-6"> 3 à 6</label>
+        <label class="opt"><input type="radio" name="f_foyer" value="7+"> 7 ou plus</label>
+      </div>
+    </div>
+    <div class="err" id="err-filtre">Merci de répondre aux deux questions.</div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 3. L'OFFRE (VERSION A OU B) -->
+  <section class="card" data-step="offre" hidden>
+    <h2>L'offre étudiée</h2>
+    <p>Lisez attentivement cette offre : les questions suivantes portent sur son <strong>prix par mois</strong>.</p>
+    <div class="offer">
+      <h2>Deezer Famille</h2>
+      <ul>
+        <li>Jusqu'à 6 comptes Premium séparés, pour les membres d'un même foyer</li>
+        <li>Musique sans publicité, sur téléphone, ordinateur, TV et enceintes</li>
+        <li>Téléchargement des titres pour écouter sans connexion</li>
+        <li>Son haute fidélité</li>
+        <li>Sans engagement : résiliable à tout moment</li>
+      </ul>
+      <!-- Seule différence entre A et B : ce paragraphe n'existe que dans la version B -->
+      <p class="ref" id="refSpotify" hidden>À titre de comparaison : chez Spotify, l'offre Famille équivalente (jusqu'à 6 comptes) coûte 21,24 € par mois.</p>
+    </div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 4a. MESURE : VAN WESTENDORP (ordre fixe, réponse libre en euros) -->
+  <section class="card" data-step="vw" hidden>
+    <h2>Le prix de l'offre Deezer Famille</h2>
+    <p class="muted">Indiquez à chaque fois un montant en euros, par mois, pour l'ensemble du foyer. Répondez spontanément.</p>
+    <div class="q">
+      <label class="label" for="vw_trop_bon_marche">À quel prix par mois trouveriez-vous cette offre si bon marché que vous douteriez de sa qualité ?</label>
+      <div class="money"><input id="vw_trop_bon_marche" inputmode="decimal" autocomplete="off" placeholder="0,00"> € / mois</div>
+    </div>
+    <div class="q">
+      <label class="label" for="vw_bon_marche">À quel prix par mois trouveriez-vous cette offre bon marché, c'est-à-dire une bonne affaire ?</label>
+      <div class="money"><input id="vw_bon_marche" inputmode="decimal" autocomplete="off" placeholder="0,00"> € / mois</div>
+    </div>
+    <div class="q">
+      <label class="label" for="vw_cher">À quel prix par mois trouveriez-vous cette offre chère, tout en l'envisageant quand même ?</label>
+      <div class="money"><input id="vw_cher" inputmode="decimal" autocomplete="off" placeholder="0,00"> € / mois</div>
+    </div>
+    <div class="q">
+      <label class="label" for="vw_trop_cher">À quel prix par mois trouveriez-vous cette offre trop chère pour l'envisager ?</label>
+      <div class="money"><input id="vw_trop_cher" inputmode="decimal" autocomplete="off" placeholder="0,00"> € / mois</div>
+    </div>
+    <div class="err" id="err-vw">Merci d'indiquer un montant en euros pour chacune des quatre questions (exemple : 18,50).</div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 4b. MESURE : GABOR-GRANGER (ordre croissant, identique pour tous) -->
+  <section class="card" data-step="gg" hidden>
+    <h2>Et à ces prix-là ?</h2>
+    <p>Pour chacun des prix ci-dessous, prendriez-vous cette offre Deezer Famille pour votre foyer (ou la garderiez-vous si vous l'avez déjà) ?</p>
+    <table class="gg">
+      <thead><tr><th>Prix par mois</th><th>Oui</th><th>Non</th></tr></thead>
+      <tbody id="ggBody"></tbody>
+    </table>
+    <div class="err" id="err-gg">Merci de répondre pour chaque prix.</div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 5. CONTRÔLE -->
+  <section class="card" data-step="controle" hidden>
+    <h2>Une question sur la présentation</h2>
+    <div class="q">
+      <span class="label">Dans la présentation de l'offre Deezer Famille, le prix d'un service concurrent était-il indiqué ?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="controle" value="oui"> Oui</label>
+        <label class="opt"><input type="radio" name="controle" value="non"> Non</label>
+        <label class="opt"><input type="radio" name="controle" value="ne_sait_plus"> Je ne m'en souviens pas</label>
+      </div>
+    </div>
+    <div class="err" id="err-controle">Merci de choisir une réponse.</div>
+    <div class="nav"><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 6. PERCEPTION (Likert, optionnel) -->
+  <section class="card" data-step="perception" hidden>
+    <h2>Votre avis</h2>
+    <p class="muted">Facultatif : vous pouvez passer les phrases sur lesquelles vous n'avez pas d'avis.</p>
+    <div id="likertBox"></div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next>Suivant</button></div>
+  </section>
+
+  <!-- 7. PROFIL -->
+  <section class="card" data-step="profil" hidden>
+    <h2>Pour finir, quelques mots sur vous</h2>
+    <div class="q">
+      <span class="label">Votre âge</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="age" value="18-24"> 18 à 24 ans</label>
+        <label class="opt"><input type="radio" name="age" value="25-34"> 25 à 34 ans</label>
+        <label class="opt"><input type="radio" name="age" value="35-49"> 35 à 49 ans</label>
+        <label class="opt"><input type="radio" name="age" value="50-64"> 50 à 64 ans</label>
+        <label class="opt"><input type="radio" name="age" value="65+"> 65 ans ou plus</label>
+      </div>
+    </div>
+    <div class="q">
+      <span class="label">Quel service de musique utilisez-vous le plus ?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="service" value="deezer"> Deezer</label>
+        <label class="opt"><input type="radio" name="service" value="spotify"> Spotify</label>
+        <label class="opt"><input type="radio" name="service" value="apple_music"> Apple Music</label>
+        <label class="opt"><input type="radio" name="service" value="youtube_music"> YouTube / YouTube Music</label>
+        <label class="opt"><input type="radio" name="service" value="amazon_music"> Amazon Music</label>
+        <label class="opt"><input type="radio" name="service" value="autre"> Un autre service</label>
+      </div>
+    </div>
+    <div class="q">
+      <span class="label">Avec quelle formule ?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="formule" value="gratuite"> Gratuite (avec publicité)</label>
+        <label class="opt"><input type="radio" name="formule" value="individuelle"> Payante individuelle</label>
+        <label class="opt"><input type="radio" name="formule" value="etudiante"> Payante étudiante</label>
+        <label class="opt"><input type="radio" name="formule" value="duo"> Payante Duo (2 personnes)</label>
+        <label class="opt"><input type="radio" name="formule" value="famille"> Payante Famille</label>
+        <label class="opt"><input type="radio" name="formule" value="ne_sait_pas"> Je ne sais pas</label>
+      </div>
+    </div>
+    <div class="q">
+      <span class="label">Qui paie cet abonnement ?</span>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="payeur" value="moi"> Moi</label>
+        <label class="opt"><input type="radio" name="payeur" value="autre_personne"> Une autre personne du foyer</label>
+        <label class="opt"><input type="radio" name="payeur" value="partage"> Nous partageons le coût</label>
+        <label class="opt"><input type="radio" name="payeur" value="sans_objet"> Personne (formule gratuite)</label>
+      </div>
+    </div>
+    <div class="err" id="err-profil">Merci de répondre aux quatre questions.</div>
+    <div class="nav"><button data-prev>Précédent</button><button class="primary" data-next id="btnSend">Envoyer mes réponses</button></div>
+  </section>
+
+  <!-- FIN -->
+  <section class="card" data-step="merci" hidden>
+    <h1>Merci !</h1>
+    <p id="merciMsg">Vos réponses ont bien été enregistrées. Merci pour votre aide.</p>
+    <p class="muted">Vous pouvez fermer cette page. Si vous connaissez d'autres personnes vivant dans un foyer de 3 personnes ou plus, n'hésitez pas à leur transmettre le lien.</p>
+  </section>
+
+  <section class="card" data-step="hors_cible" hidden>
+    <h1>Merci pour votre réponse</h1>
+    <p>Cette étude s'adresse aux personnes qui écoutent de la musique en streaming et vivent dans un foyer d'au moins 3 personnes. Vous n'êtes donc pas concerné·e par la suite du questionnaire.</p>
+    <p class="muted">Vous pouvez fermer cette page.</p>
+  </section>
+</main>
+
+<script>
+/* =====================  CONFIGURATION  ===================== */
+const CONFIG = {
+  // URL de l'application web Google Apps Script (voir apps-script.gs). Vide = mode démo, rien n'est envoyé.
+  ENDPOINT: "https://script.google.com/macros/s/AKfycbwDsWpqnHyb9Y0uERW2C3zXWXd18d4oB7beMNe8ev0PF75aKWWG5VUqkWsDtEAU02vQ/exec",
+  // Gabor-Granger : prix soumis, du plancher provisoire au plafond concurrentiel (Spotify Famille 21,24 €)
+  GG_PRICES: [15.99, 17.49, 18.99, 19.99, 20.49, 20.99, 21.24],
+  GG_ORDER: "croissant",   // ordre fixe, identique pour tous les répondants
+  QUESTIONNAIRE_VERSION: "v1-2026-10-12"
+};
+/* ========================================================== */
+
+const params = new URLSearchParams(location.search);
+const TEST = params.get("test") === "1";
+const store = {
+  get(k){ try { return sessionStorage.getItem(k); } catch(e){ return null; } },
+  set(k,v){ try { sessionStorage.setItem(k,v); } catch(e){} }
+};
+
+// Tirage au sort à l'ouverture du questionnaire (conservé si la page est rechargée)
+let version = store.get("dz_version");
+if (TEST && /^[AB]$/.test(params.get("v") || "")) version = params.get("v");
+if (!version) { version = Math.random() < 0.5 ? "A" : "B"; }
+store.set("dz_version", version);
+document.getElementById("refSpotify").hidden = (version !== "B");
+
+const rid = store.get("dz_id") || ((crypto.randomUUID && crypto.randomUUID()) || (Date.now().toString(36) + Math.random().toString(36).slice(2)));
+store.set("dz_id", rid);
+const t0 = Date.now();
+let tOffer = null;
+
+if (!CONFIG.ENDPOINT || TEST) {
+  const d = document.getElementById("demo");
+  d.hidden = false;
+  d.textContent = (TEST ? "Mode test" : "Mode démo (aucune adresse d'enregistrement configurée)") + " – version affichée : " + version + ".";
+}
+
+// Grille Gabor-Granger
+const fmt = p => p.toFixed(2).replace(".", ",") + " €";
+const ggKey = p => "gg_" + p.toFixed(2).replace(".", "_");
+const prices = CONFIG.GG_ORDER === "croissant" ? [...CONFIG.GG_PRICES].sort((a,b)=>a-b) : [...CONFIG.GG_PRICES].sort((a,b)=>b-a);
+document.getElementById("ggBody").innerHTML = prices.map(p =>
+  `<tr><td>${fmt(p)}</td>
+   <td><input type="radio" name="${ggKey(p)}" value="1" aria-label="Oui à ${fmt(p)}"></td>
+   <td><input type="radio" name="${ggKey(p)}" value="0" aria-label="Non à ${fmt(p)}"></td></tr>`).join("");
+
+// Échelles de Likert (5 points, équilibrées)
+const LIKERT_ITEMS = [
+  ["lk_valeur", "L'offre Deezer Famille apporterait beaucoup à mon foyer."],
+  ["lk_qualite", "Deezer est un service de musique de qualité."],
+  ["lk_confiance", "Je ferais confiance à Deezer pour un abonnement familial sur la durée."]
+];
+const LIKERT_LABELS = ["Pas du tout d'accord","Plutôt pas d'accord","Ni d'accord ni pas d'accord","Plutôt d'accord","Tout à fait d'accord"];
+document.getElementById("likertBox").innerHTML = LIKERT_ITEMS.map(([k,txt]) =>
+  `<div class="q"><span class="label">${txt}</span><div class="likert">` +
+  LIKERT_LABELS.map((l,i)=>`<label><input type="radio" name="${k}" value="${i+1}">${l}</label>`).join("") +
+  `</div></div>`).join("");
+
+// Navigation
+const steps = [...document.querySelectorAll("section[data-step]")];
+const flow = ["accueil","filtre","offre","vw","gg","controle","perception","profil"];
+let cur = "accueil";
+const radio = n => { const el = document.querySelector(`input[name="${n}"]:checked`); return el ? el.value : ""; };
+const money = id => {
+  const raw = document.getElementById(id).value.trim().replace(/€/g,"").replace(/\s/g,"").replace(",", ".");
+  if (raw === "" || !/^\d+(\.\d+)?$/.test(raw)) return null;
+  return Math.round(parseFloat(raw) * 100) / 100;
+};
+function show(name){
+  steps.forEach(s => s.hidden = (s.dataset.step !== name));
+  cur = name;
+  const i = flow.indexOf(name);
+  document.getElementById("progress").style.width = (i < 0 ? 100 : Math.round(i / flow.length * 100)) + "%";
+  document.getElementById("stepLabel").textContent = i >= 0 ? `Étape ${i+1} sur ${flow.length}` : "";
+  if (name === "offre" && !tOffer) tOffer = Date.now();
+  window.scrollTo(0,0);
+}
+function err(name, on){ const e = document.getElementById("err-" + name); if (e) e.classList.toggle("on", on); return !on; }
+
+const validate = {
+  accueil: () => err("accueil", !document.getElementById("consent").checked),
+  filtre:  () => err("filtre", !radio("f_streaming") || !radio("f_foyer")),
+  offre:   () => true,
+  vw:      () => err("vw", ["vw_trop_bon_marche","vw_bon_marche","vw_cher","vw_trop_cher"].some(id => money(id) === null)),
+  gg:      () => err("gg", prices.some(p => !radio(ggKey(p)))),
+  controle:() => err("controle", !radio("controle")),
+  perception: () => true,
+  profil:  () => err("profil", ["age","service","formule","payeur"].some(n => !radio(n)))
+};
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  const i = flow.indexOf(cur);
+  if (b.hasAttribute("data-prev") && i > 0) { show(flow[i-1]); return; }
+  if (!b.hasAttribute("data-next")) return;
+  if (!validate[cur]()) return;
+  if (cur === "filtre") {
+    const cible = radio("f_streaming") === "oui" && (radio("f_foyer") === "3-6" || radio("f_foyer") === "7+");
+    if (!cible) { send("hors_cible"); show("hors_cible"); return; }
+  }
+  if (cur === "profil") { b.disabled = true; send("complet").then(() => show("merci")); return; }
+  show(flow[i+1]);
+});
+
+function collect(statut){
+  const d = {
+    id_repondant: rid,
+    version: version,
+    statut: statut,
+    test: TEST ? 1 : 0,
+    questionnaire: CONFIG.QUESTIONNAIRE_VERSION,
+    ordre_gg: CONFIG.GG_ORDER,
+    f_streaming: radio("f_streaming"),
+    f_foyer: radio("f_foyer"),
+    duree_totale_sec: Math.round((Date.now() - t0) / 1000),
+    duree_depuis_offre_sec: tOffer ? Math.round((Date.now() - tOffer) / 1000) : ""
+  };
+  if (statut !== "complet") return d;
+  const vw = ["vw_trop_bon_marche","vw_bon_marche","vw_cher","vw_trop_cher"];
+  vw.forEach(id => d[id] = money(id));
+  // Indicateurs de cohérence (calculés, les réponses brutes restent dans le fichier)
+  d.vw_coherent = (d.vw_trop_bon_marche < d.vw_bon_marche && d.vw_bon_marche < d.vw_cher && d.vw_cher < d.vw_trop_cher) ? 1 : 0;
+  const asc = [...CONFIG.GG_PRICES].sort((a,b)=>a-b);
+  asc.forEach(p => d[ggKey(p)] = parseInt(radio(ggKey(p)), 10));
+  let ok = 1;
+  for (let k = 1; k < asc.length; k++) if (d[ggKey(asc[k])] === 1 && d[ggKey(asc[k-1])] === 0) ok = 0;
+  d.gg_coherent = ok;
+  d.controle = radio("controle");
+  d.controle_correct = ((version === "B" && d.controle === "oui") || (version === "A" && d.controle === "non")) ? 1 : 0;
+  LIKERT_ITEMS.forEach(([k]) => d[k] = radio(k) ? parseInt(radio(k), 10) : "");
+  ["age","service","formule","payeur"].forEach(n => d[n] = radio(n));
+  return d;
+}
+
+async function send(statut){
+  const data = collect(statut);
+  if (store.get("dz_sent_" + statut)) return;          // évite les doublons en cas de double clic
+  if (!CONFIG.ENDPOINT) { console.log("Réponse (mode démo, non envoyée) :", data); window.__lastPayload = data; return; }
+  try {
+    await fetch(CONFIG.ENDPOINT, { method: "POST", mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(data) });
+    store.set("dz_sent_" + statut, "1");
+  } catch (e) {
+    document.getElementById("merciMsg").textContent = "Un problème de connexion a empêché l'envoi. Vérifiez votre connexion puis rechargez la page : désolé pour la gêne.";
+  }
+}
+
+show("accueil");
+</script>
+</body>
+</html>
