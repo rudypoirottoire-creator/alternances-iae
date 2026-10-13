@@ -7,17 +7,19 @@ cd "$(dirname "$0")/.."
 API=https://api.github.com/repos/vincentfavarin/metier/contents/data
 RAW=https://raw.githubusercontent.com/vincentfavarin/metier/main/data
 CACHE=scripts/.cache
+# Avec un jeton GitHub (variable GITHUB_TOKEN), on évite la limite de 60 appels par heure de l'API GitHub
+AUTH=(); [ -n "${GITHUB_TOKEN:-}" ] && AUTH=(-H "Authorization: Bearer $GITHUB_TOKEN")
 rm -rf "$CACHE" && mkdir -p "$CACHE/brut" data
 
 echo "→ Recherche de la dernière liste d'offres actives…"
-DERNIER=$(curl -fsSL "$API/actives" | jq -r '[.[].name | select(endswith(".csv"))] | sort | last')
+DERNIER=$(curl -fsSL ${AUTH[@]+"${AUTH[@]}"} "$API/actives" | jq -r '[.[].name | select(endswith(".csv"))] | sort | last')
 curl -fsSL -o "$CACHE/actives.csv" "$RAW/actives/$DERNIER"
 echo "  $DERNIER"
 
 echo "→ Téléchargement des annonces brutes…"
-for MOIS in $(curl -fsSL "$API/brut" | jq -r '.[] | select(.type == "dir") | .name'); do
+for MOIS in $(curl -fsSL ${AUTH[@]+"${AUTH[@]}"} "$API/brut" | jq -r '.[] | select(.type == "dir") | .name'); do
   mkdir -p "$CACHE/brut/$MOIS"
-  for F in $(curl -fsSL "$API/brut/$MOIS" | jq -r '.[] | select(.name | endswith(".jsonl")) | .name'); do
+  for F in $(curl -fsSL ${AUTH[@]+"${AUTH[@]}"} "$API/brut/$MOIS" | jq -r '.[] | select(.name | endswith(".jsonl")) | .name'); do
     curl -fsSL -o "$CACHE/brut/$MOIS/$F" "$RAW/brut/$MOIS/$F" &
   done
   wait
