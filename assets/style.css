@@ -255,3 +255,13 @@ table.puis td.vise{font-weight:700; color:var(--ink)}
 .ind-q .chip{font-size:12.5px; padding:4px 10px}
 #k-indeed{grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr))}
 svg text.halo{paint-order:stroke; stroke:var(--surface); stroke-width:4px; stroke-linejoin:round}
+
+/* Page Autres canaux */
+table.canaux{min-width:860px}
+table.canaux td a.t{font-weight:600; color:var(--ink); text-decoration:none}
+table.canaux td a.t:hover{color:var(--mod); text-decoration:underline}
+table.canaux td .ext{margin-top:4px; max-width:60ch}
+table.canaux td.src{font-size:13px; white-space:nowrap}
+.pill.alt{background:var(--ink); color:var(--bg); margin-top:6px}
+.adz a{color:var(--ink)}
+.adz .adz-logo{font-weight:800; letter-spacing:-.01em; color:#6CB52D; text-decoration:none}
