@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternances IAE · Autres canaux</title>
+<link rel="stylesheet" href="assets/style.css?v=20261013">
+<script src="data/offres.js?v=20261013"></script>
+<script src="data/canaux.js?v=20261013"></script>
+<script src="assets/app.js?v=20261013"></script>
+<script src="assets/canaux.js?v=20261013"></script>
+</head>
+<body data-page="canaux">
+<main class="wrap" style="gap:28px">
+  <header class="page">
+    <span class="eyebrow">Canaux · API d'emploi</span>
+    <h1>Les offres des autres canaux</h1>
+    <p class="lede" id="c-lede">Les offres de deux API d'emploi repérées dans la liste <a href="https://github.com/public-apis/public-apis#jobs" target="_blank" rel="noopener">public-apis</a>, affichées en entier sur notre site avec la mention de leur source.</p>
+  </header>
+
+  <section>
+    <div class="grid2" id="c-sources"></div>
+  </section>
+
+  <section style="gap:14px">
+    <div class="chips" id="c-src" role="group" aria-label="Filtrer par canal"></div>
+    <div class="chips" id="c-par" role="group" aria-label="Filtrer par parcours"></div>
+    <div class="filters">
+      <label for="c-alt"><input type="checkbox" id="c-alt"> Alternance ou stage seulement</label>
+      <input type="search" id="c-q" placeholder="Rechercher (ex. marketing, Lyon)" aria-label="Rechercher une offre">
+    </div>
+    <p class="count" id="c-count"></p>
+    <div class="tablewrap">
+      <table class="canaux">
+        <thead><tr><th>Offre</th><th>Parcours</th><th>Lieu</th><th>Publiée</th><th>Canal</th></tr></thead>
+        <tbody id="c-tbody"></tbody>
+      </table>
+    </div>
+    <button class="btn" type="button" id="c-more" style="justify-self:start">Afficher 50 offres de plus</button>
+  </section>
+
+  <section class="prose" style="max-width:none">
+    <h2>Pourquoi ces deux API, et pas les 32 autres de la liste</h2>
+    <p>La section « Jobs » de public-apis recense 34 API. Nous gardons celles qui donnent des offres en France, se branchent sans contrat et permettent d'afficher les offres sur notre site.</p>
+    <div class="tablewrap">
+      <table class="choix">
+        <thead><tr><th>API</th><th>Verdict</th><th>Raison</th></tr></thead>
+        <tbody>
+          <tr><td><b>Arbeitnow</b></td><td><span class="dec oui">Branchée</span></td><td>Gratuite, sans clé, offres européennes dont plusieurs centaines en France. Condition : un lien vers arbeitnow.com.</td></tr>
+          <tr><td><b>Adzuna</b></td><td><span class="dec oui">Prête, clé à ajouter</span></td><td>Gratuite avec clé en libre-service, couvre la France. Chaque offre affichée porte « Jobs by Adzuna » ; publier des statistiques demande un accord écrit d'Adzuna, nous n'en calculons donc pas. Méthode reprise du <a href="https://github.com/H-Wen-LIN/metier/blob/main/guide-adzuna.md" target="_blank" rel="noopener">guide du groupe H-Wen-LIN</a>.</td></tr>
+          <tr><td>Jooble</td><td><span class="dec non">Plus tard</span></td><td>Couvre la France, mais la clé est délivrée après validation et le quota gratuit est très faible.</td></tr>
+          <tr><td>Careerjet</td><td><span class="dec non">Écartée</span></td><td>Il faut un site éditeur et transmettre l'adresse IP de chaque visiteur : pas adapté à une collecte quotidienne.</td></tr>
+          <tr><td>Arbeitsamt, Reed, USAJOBS, The Muse, ZipRecruiter, WhatJobs, Jobs2Careers, Juju</td><td><span class="dec non">Écartées</span></td><td>Marché d'un autre pays (Allemagne, Royaume-Uni, États-Unis) ou programme éditeur sur contrat.</td></tr>
+          <tr><td>RemoteOK, DevITjobs, GraphQL Jobs, Findwork, freehire, AI Dev Jobs, Artificial Intelligence Jobs, Techmap, TechRole Index</td><td><span class="dec non">Écartées</span></td><td>Métiers de la tech ou du télétravail international, très peu d'offres de marketing ou de vente en France.</td></tr>
+          <tr><td>JobsPipe, JobDataLake, Worklittle, Jobven, RankFabrik</td><td><span class="dec non">Écartées</span></td><td>Services payants qui revendent des offres collectées ailleurs.</td></tr>
+          <tr><td>HireLayer, HeroHunt, Allowly, Open Skills, Dabloons, Upwork, Vibeworker, CuratorSearch</td><td><span class="dec non">Hors sujet</span></td><td>Analyse de CV, recherche de profils, missions freelance ou offres de musées : pas des offres d'emploi pour nous.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="caption">Tri fait le 13 octobre 2026 à partir de la liste <a href="https://github.com/public-apis/public-apis" target="_blank" rel="noopener">public-apis/public-apis</a>. Il recoupe le <a href="https://github.com/H-Wen-LIN/metier/blob/main/sources-api.md" target="_blank" rel="noopener">recensement des API d'emploi</a> fait par un autre groupe du cours, qui recommande aussi La bonne alternance (API officielle, absente de la liste).</p>
+  </section>
+</main>
+</body>
+</html>

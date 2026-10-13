@@ -4,11 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alternances IAE · Tableau de bord</title>
-<link rel="stylesheet" href="assets/style.css?v=20261006b">
-<script src="data/offres.js?v=20261006b"></script>
-<script src="assets/app.js?v=20261006b"></script>
-<script src="assets/analyse.js?v=20261006b"></script>
-<script src="assets/cm2.js?v=20261006b"></script>
+<link rel="stylesheet" href="assets/style.css?v=20261013">
+<script src="data/offres.js?v=20261013"></script>
+<script src="data/indeed.js?v=20261013"></script>
+<script src="assets/app.js?v=20261013"></script>
+<script src="assets/analyse.js?v=20261013"></script>
+<script src="assets/cm2.js?v=20261013"></script>
+<script src="assets/indeed.js?v=20261013"></script>
 </head>
 <body data-page="index">
 <main class="wrap">
@@ -81,13 +83,21 @@
   <section id="canaux">
     <div class="sechead">
       <span class="eyebrow">Nos canaux</span>
-      <h2>Deux canaux : l'un analysé, l'autre consulté en lien</h2>
-      <p>Un canal, c'est une source d'offres. Nous n'analysons que des données collectées de façon autorisée ; les autres sites se consultent en direct.</p>
+      <h2>Nos canaux : ce qu'on analyse, ce qu'on affiche, ce qu'on consulte</h2>
+      <p>Un canal, c'est une source d'offres. Nous n'analysons que des données publiées ou collectées de façon autorisée ; le reste se consulte en direct sur chaque site.</p>
     </div>
-    <div class="grid2">
+    <div class="grid3">
       <div class="panel stack canal">
         <div class="canal-h"><h3>France Travail</h3><span class="dec oui">Analysé</span></div>
         <p><b class="num" id="canaux-ft"></b> offres d'alternance au <b id="canaux-date"></b>, issues du dépôt public <a href="https://github.com/vincentfavarin/metier" target="_blank" rel="noopener">vincentfavarin/metier</a>, qui interroge chaque jour l'API officielle de France Travail. Ce sont elles qui alimentent le tableau de bord, l'analyse du TD 1 et les tests du CM 2.</p>
+      </div>
+      <div class="panel stack canal">
+        <div class="canal-h"><h3>Indeed</h3><span class="dec oui">Tendances analysées</span></div>
+        <p>Indeed publie ses propres données en accès libre (Indeed Hiring Lab) : l'évolution du nombre d'offres en France par secteur et par région. Les offres elles-mêmes se consultent avec nos <a href="#indeed">recherches prêtes</a>.</p>
+      </div>
+      <div class="panel stack canal">
+        <div class="canal-h"><h3>Arbeitnow et Adzuna</h3><span class="dec oui">Offres affichées</span></div>
+        <p>Deux API d'emploi repérées dans la liste public-apis. Leurs offres sont affichées sur la page <a href="canaux.html">Autres canaux</a>, avec la mention de leur source.</p>
       </div>
       <div class="panel stack canal">
         <div class="canal-h"><h3>Welcome to the Jungle</h3><span class="dec non">Consulté en lien</span></div>
@@ -96,6 +106,36 @@
       </div>
     </div>
     <div class="callout"><p><strong>D'où vient ce canal :</strong> l'idée d'ajouter Welcome to the Jungle vient du dépôt public d'un autre groupe, <a href="https://github.com/loicsabatini/metier" target="_blank" rel="noopener">loicsabatini/metier</a> (script <code>extraire_wttj.py</code>). Nous reprenons le canal mais pas ses fichiers : le script lit le flux d'articles du site, pas ses offres, et complète par des offres générées au hasard quand ce flux ne répond pas. Les conditions d'utilisation de Welcome to the Jungle interdisent aussi la collecte automatique de ses offres, comme le rappelle le dépôt du cours. Ce canal reste donc hors de nos statistiques.</p></div>
+  </section>
+
+  <section id="indeed">
+    <div class="sechead">
+      <span class="eyebrow">Canal Indeed</span>
+      <h2 id="h-indeed">Sur Indeed, comment évoluent les offres de nos métiers ?</h2>
+      <p>Indice des offres publiées sur Indeed en France, base 100 au 1er février 2020, corrigé des variations saisonnières. Marketing pour le parcours MOD, vente pour DCIB, commerce de détail pour Retail.</p>
+    </div>
+    <div class="chips" id="indeed-var" role="group" aria-label="Choisir les offres">
+      <button class="chip" type="button" data-var="total">Toutes les offres en ligne</button>
+      <button class="chip" type="button" data-var="new">Nouvelles offres (moins de 7 jours)</button>
+    </div>
+    <div class="panel stack">
+      <svg class="chart" id="c-indeed" role="img" aria-label="Indice des offres Indeed par secteur"></svg>
+      <p class="caption" id="cap-indeed"></p>
+    </div>
+    <div class="kpis" id="k-indeed"></div>
+    <div class="stack" style="gap:18px">
+      <div class="panel stack">
+        <h3>Notre région face à l'Île-de-France (tous métiers)</h3>
+        <svg class="chart" id="c-indeed-reg" role="img" aria-label="Indice des offres Indeed par région"></svg>
+        <p class="caption" id="cap-indeed-reg"></p>
+      </div>
+      <div class="panel stack">
+        <h3>Chercher les offres sur Indeed</h3>
+        <p class="muted" style="font-size:14px">Chaque bouton ouvre Indeed avec la recherche et le lieu déjà remplis.</p>
+        <div class="canal-ps" id="indeed-liens"></div>
+      </div>
+    </div>
+    <div class="callout"><p><strong>Ce que ce canal mesure, et ce qu'il ne mesure pas :</strong> des tendances, pas des offres. Indeed ne donne ni le nombre d'offres, ni leur contenu, et ne distingue pas l'alternance. Il n'existe plus d'API publique pour lire ses offres, et ses conditions d'utilisation interdisent de les collecter automatiquement. Les données viennent du dépôt public <a href="https://github.com/hiring-lab/job_postings_tracker" target="_blank" rel="noopener">hiring-lab/job_postings_tracker</a> (licence CC BY 4.0, mis à jour chaque semaine).</p></div>
   </section>
 
   <section id="analyse" class="partie">

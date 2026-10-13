@@ -23,3 +23,11 @@ Ouvrez le Terminal dans ce dossier puis lancez :
     bash scripts/mettre_a_jour.sh
 
 Le script télécharge les dernières offres du dépôt [vincentfavarin/metier](https://github.com/vincentfavarin/metier), refait le tri et remplace `data/offres.js` et `data/offres.csv`. Le suivi du groupe n'est pas touché. Les règles de tri se trouvent dans `scripts/classer.rb`.
+
+## Les canaux
+
+- **France Travail** : les offres analysées (dépôt public vincentfavarin/metier, API officielle).
+- **Indeed** : les tendances du marché par secteur et par région, d'après les données ouvertes d'Indeed Hiring Lab (dépôt hiring-lab/job_postings_tracker, licence CC BY 4.0). Le script `scripts/indeed.rb` les réduit dans `data/indeed.js` ; `mettre_a_jour.sh` les télécharge. Les offres Indeed se consultent par des liens de recherche préremplis : aucune offre n'est collectée, les CGU d'Indeed l'interdisent.
+- **Welcome to the Jungle** : consulté en lien (recherches prêtes à coller), pas de données collectées.
+- **Arbeitnow** (API repérée dans la liste public-apis) : ses offres en France sont chargées en direct par la page `canaux.html`, à chaque visite.
+- **Adzuna** : `scripts/canaux.rb` récupère ses offres avec les clés `ADZUNA_APP_ID` et `ADZUNA_APP_KEY` et écrit `data/canaux.js`, affiché sur la même page avec la mention « Jobs by Adzuna ».
